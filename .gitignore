@@ -1,0 +1,61 @@
+# ── Xcode ──────────────────────────────────────────────────────────────────────
+build/
+DerivedData/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata/
+*.xccheckout
+*.moved-aside
+*.xcuserstate
+*.xcscmblueprint
+
+# ── Swift Package Manager ───────────────────────────────────────────────────────
+.build/
+.swiftpm/
+Packages/
+Package.resolved
+
+# ── CocoaPods ──────────────────────────────────────────────────────────────────
+Pods/
+*.xcworkspace
+!*.xcodeproj/*.xcworkspace
+!*.xcodeproj/xcshareddata/
+
+# ── Carthage ───────────────────────────────────────────────────────────────────
+Carthage/Build/
+
+# ── fastlane ───────────────────────────────────────────────────────────────────
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output/
+
+# ── macOS ───────────────────────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# ── Secrets / environment ───────────────────────────────────────────────────────
+*.env
+.env*
+Secrets.swift
+Config.xcconfig
+
+# ── Simulators ──────────────────────────────────────────────────────────────────
+iOSSimulator.dmg
+
+# ── Playground ─────────────────────────────────────────────────────────────────
+timeline.xctimeline
+playground.xcworkspace
+
+# ── add_files helper (dev tool, not source) ────────────────────────────────────
+add_files.rb
