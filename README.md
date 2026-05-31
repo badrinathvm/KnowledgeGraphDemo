@@ -242,8 +242,3 @@ For small graphs (≤200 nodes) a **Verlet spring simulation** runs on a backgro
 
 ---
 
-## Project Notes
-
-- **No `add_files.rb` needed** — Xcode 16's `PBXFileSystemSynchronizedRootGroup` auto-includes every `.swift` file placed in `KnowledgeGraphDemo/`.
-- **Zero continuous re-renders** — Canvas only redraws when `@Observable` properties change. `TimelineView` is active only in `HighlightPulseLayer` and only while there are highlighted nodes.
-- **Thread safety** — Force layout runs in `Task.detached`; results are published back via `await MainActor.run`. All ViewModel state is `@MainActor`-isolated.
