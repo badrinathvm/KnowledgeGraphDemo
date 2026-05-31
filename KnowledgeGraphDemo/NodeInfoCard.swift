@@ -23,7 +23,7 @@ struct NodeInfoCard: View {
                 if let rating = movieRating {
                     Label(String(format: "%.1f", rating), systemImage: "star.fill")
                         .font(.caption)
-                        .foregroundStyle(.yellow)
+                        .foregroundStyle(Color(red: 1.0, green: 0.75, blue: 0.0))
                 }
 
                 if let year = releaseYear {

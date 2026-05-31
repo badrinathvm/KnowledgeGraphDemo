@@ -4,6 +4,15 @@ An iOS app that renders a Neo4j movie knowledge graph as an interactive sunflowe
 
 ---
 
+## Demo
+
+<!-- Replace the line below with your actual GIF once recorded -->
+<!-- Tip: record with Xcode Simulator → File › Record Screen, then drop the .gif here -->
+
+![App demo](assets/demo.gif)
+
+---
+
 ## Features
 
 | Feature | Detail |
