@@ -19,12 +19,10 @@ struct AnswerPanelView: View {
                 }
             }
             ScrollView {
-                Text(text)
-                    .font(.callout)
-                    .foregroundStyle(.primary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                MarkdownView(markdown: text)
+                    .padding(.bottom, 4)
             }
-            .frame(maxHeight: 130)
+            .frame(maxHeight: 200)
         }
         .padding(12)
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
