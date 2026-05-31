@@ -75,7 +75,7 @@ submitQuery() → POST /query → highlighted_node_ids returned
 
 ## API Contract
 
-The backend is a FastAPI server in the companion `neurosymbolicai` project.
+The backend is a FastAPI server from the [KnowledgeGraph](https://github.com/badrinathvm/KnowledgeGraph) repo.
 
 ### `GET /graph`
 
@@ -115,6 +115,22 @@ The backend is a FastAPI server in the companion `neurosymbolicai` project.
 
 Node IDs are Neo4j `elementId()` strings and are the single source of truth shared between backend and iOS.
 
+### Backend architecture
+
+```
+KnowledgeGraph/
+├── server.py          # FastAPI app — /graph and /query endpoints
+├── database/          # Neo4j connection + moviePlots vector index
+├── graph/             # LangGraph workflow orchestration
+├── nodes/             # retrieve and generate node functions
+├── llm/               # OpenAI LLM factory (GPT-4o)
+├── models/            # Pydantic request/response schemas
+├── prompts/           # ChatPromptTemplate definitions
+└── state/             # LangGraph state schema
+```
+
+**Query pipeline:** question → OpenAI embedding → `moviePlots` vector search → Neo4j element ID resolution → GPT-4o generation → answer + highlighted node IDs
+
 ---
 
 ## Requirements
@@ -124,29 +140,26 @@ Node IDs are Neo4j `elementId()` strings and are the single source of truth shar
 - iOS 26 SDK / Swift 6
 - No external Swift dependencies
 
-### Backend (`neurosymbolicai/`)
-- Python 3.10+
-- Neo4j instance with the movie dataset + `plotEmbedding` vectors loaded
-- OpenAI API key (for embeddings and LLM generation)
-
-```
-fastapi>=0.115.0
-uvicorn[standard]>=0.32.0
-neo4j
-langchain · langchain-core · langchain-openai · langchain-neo4j
-langgraph
-openai>=1.0.0
-python-dotenv>=1.0.0
-```
+### Backend ([KnowledgeGraph](https://github.com/badrinathvm/KnowledgeGraph))
+- Python 3.12+
+- [uv](https://docs.astral.sh/uv/) package manager
+- Neo4j instance with the movie dataset + `moviePlots` vector index loaded
+- OpenAI API key (for embeddings and GPT-4o generation)
 
 ---
 
 ## Setup
 
-### 1. Configure the backend environment
+### 1. Clone the backend
 
 ```bash
-cd /path/to/neurosymbolicai
+git clone https://github.com/badrinathvm/KnowledgeGraph.git
+cd KnowledgeGraph
+```
+
+### 2. Configure the environment
+
+```bash
 cp .env.example .env   # fill in the values below
 ```
 
@@ -158,16 +171,18 @@ NEO4J_DATABASE=neo4j
 OPENAI_API_KEY=sk-...
 ```
 
-### 2. Install backend dependencies
+### 3. Install dependencies
 
 ```bash
-pip install -r requirements.txt
+uv sync
 ```
 
-### 3. Start the FastAPI server
+> Install `uv` first if needed: `curl -LsSf https://astral.sh/uv/install.sh | sh`
+
+### 4. Start the FastAPI server
 
 ```bash
-uvicorn api.server:app --reload
+uv run uvicorn server:app --reload
 # Running on http://localhost:8000
 ```
 
@@ -177,7 +192,7 @@ Verify:
 curl http://localhost:8000/graph | python3 -m json.tool | head -40
 ```
 
-### 4. Run the iOS app
+### 5. Run the iOS app
 
 Open `KnowledgeGraphDemo.xcodeproj` in Xcode, select the **iPhone Simulator** target, and press **⌘R**.
 
